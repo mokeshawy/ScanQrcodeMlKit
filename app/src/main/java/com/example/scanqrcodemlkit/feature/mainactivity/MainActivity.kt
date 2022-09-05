@@ -2,11 +2,10 @@ package com.example.scanqrcodemlkit.feature.mainactivity
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.example.scanqrcodemlkit.R
-import com.example.scanqrcodemlkit.core.scan_qrcode_manager.QrcodeResultHandler
 import com.example.scanqrcodemlkit.databinding.ActivityMainBinding
 import com.example.scanqrcodemlkit.feature.scanQrcodeActivity.ScanQrcodeActivity
 
@@ -24,6 +23,14 @@ class MainActivity : AppCompatActivity() {
 
     private fun startScanQrcodeActivity() {
         val intent = Intent(this, ScanQrcodeActivity::class.java)
-        startActivity(intent)
+        activityResultLauncher.launch(intent)
     }
+
+    private val activityResultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == RESULT_OK && it.data != null) {
+                val result = it.data?.getStringExtra("QRCODE")
+                binding.resultTv.text = result
+            }
+        }
 }
