@@ -6,6 +6,7 @@ import android.graphics.Rect
 import android.graphics.RectF
 import android.media.Image
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageAnalysis
@@ -134,7 +135,7 @@ class ScanQrcodeManager @Inject constructor(private val activity: Activity) {
                 barcodeBoxView.setRect(RectF())
             }
         }.addOnFailureListener {
-            // handle error not read qrCode
+            Toast.makeText(activity, "Please try again later", Toast.LENGTH_SHORT).show()
         }
     }
 
